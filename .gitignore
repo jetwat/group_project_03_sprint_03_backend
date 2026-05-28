@@ -1,0 +1,5 @@
+node_modules/
+.env
+.DS_Store
+group_project_03_sprint_03-backend/
+test
