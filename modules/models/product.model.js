@@ -32,6 +32,11 @@ const productSchema = new mongoose.Schema(
       min: [0.5, "Rating must be at least 1"],
       max: [5, "Rating cannot be more than 5"],
     },
+    img_link: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     Page: {
       type: Number,
       required: true,
