@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema(
   {
@@ -7,68 +6,70 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
       lowercase: true,
-      minlength: 0,
-      trim: true,
+      trim: true
     },
     title: {
       type: String,
       required: true,
       lowercase: true,
-      minlength: 0,
+      trim: true
     },
     isbn: {
       type: String,
       required: true,
       unique: true,
+      trim: true
     },
     price: {
-      type: Decimal128,
-      required: true,
-      trim: true,
+      type: mongoose.Schema.Types.Decimal128,
+      required: true
     },
     rating: {
       type: Number,
-      required: [true, "Please provide a rating"],
-      min: [0.5, "Rating must be at least 1"],
-      max: [5, "Rating cannot be more than 5"],
+      required: [true, 'Please provide a rating'],
+      min: [0.5, 'Rating must be at least 0.5'],
+      max: [5, 'Rating cannot be more than 5']
     },
     img_link: {
       type: String,
       required: true,
-      trim: true,
+      trim: true
     },
-    Page: {
+    page: {
       type: Number,
-      required: true,
+      required: true
     },
-    Language: {
+    language: {
       type: String,
       required: true,
+      trim: true
     },
-    Publisher: {
+    publisher: {
       type: String,
       required: true,
+      trim: true
     },
     stock: {
-      type: Integer,
+      type: Number,
       required: true,
-      trim: true,
+      min: 0
     },
-    is_highlighted: { type: String, required: true },
-    img_link: {
+    is_highlighted: {
+      type: Boolean,
+      default: false
+    },
+    category: {
       type: String,
       required: true,
-      trim: true,
+      trim: true
     },
-    category: { type: String, required: true, unique: true, trim: true },
     author: {
       type: String,
       required: true,
-      unique: true,
-      trim: true,
-    },
+      trim: true
+    }
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export const Product = mongoose.model("Product", productSchema);
+export const Product = mongoose.model('Product', productSchema);
