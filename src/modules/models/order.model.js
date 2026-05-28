@@ -20,7 +20,18 @@ const orderSchema = new mongoose.Schema(
     order_item: [
       {
         book_id: {
-          type: integer,
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        book_name: {
+          type: string,
+          required: true,
+          unique: true,
+          trim: true,
+        },
+        author: {
+          type: string,
           required: true,
           unique: true,
           trim: true,
@@ -32,6 +43,11 @@ const orderSchema = new mongoose.Schema(
         },
         price: {
           type: Decimal128,
+          required: true,
+          trim: true,
+        },
+        img_link: {
+          type: string,
           required: true,
           trim: true,
         },
