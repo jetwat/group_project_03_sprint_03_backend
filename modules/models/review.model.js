@@ -7,13 +7,6 @@ const reviewSchema = new mongoose.Schema(
       required: [true, "Please provide a rating"],
       min: [0.5, "Rating must be at least 1"],
       max: [5, "Rating cannot be more than 5"],
-      validate: {
-        validator: function (value) {
-          return value % 0.5 === 0;
-        },
-        message: (props) =>
-          `${props.value} is not a valid rating. Ratings must be in increments of 0.5.`,
-      },
     },
     review: {
       type: String,
