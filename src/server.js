@@ -1,27 +1,27 @@
-import express from "express";
-import cors from "cors";
-import { router as apiRoutes } from "./routes/index.js";
-import { connectDB } from "./config/mongodb.js";
-import { connectSupabase } from "./config/supabase.js";
-import cookieParser from "cookie-parser";
-import helmet from "helmet";
-import { limiter } from "./middleware/rateLimiter.js";
+import express from 'express';
+import cors from 'cors';
+import { router as apiRoutes } from './routes/index.js';
+import { connectDB } from './config/mongodb.js';
+// import { connectSupabase } from "./config/supabase.js";
+import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+// import { limiter } from './middleware/rateLimiter.js';
 const app = express();
 const corsOptions = {
   origin: [
-    "http://localhost:5173",
-    "http://localhost:5174",
-    "http://localhost:5175",
-    "https://jsd-12-full-stack-frontend.vercel.app",
+    'http://localhost:5173',
+    'http://localhost:5174',
+    'http://localhost:5175',
+    'https://jsd-12-full-stack-frontend.vercel.app'
   ], // frontend domain
-  credentials: true, // ✅ allow cookies to be sent
+  credentials: true // ✅ allow cookies to be sent
 };
 app.use(helmet());
 app.use(cors(corsOptions));
-app.use(limiter);
+// app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.send(`<!doctype html>
   <html lang="en">
     <head>
@@ -53,22 +53,22 @@ app.get("/", (req, res) => {
     </body>
   </html>`);
 });
-app.use("/api", apiRoutes);
+app.use('/api', apiRoutes);
 // Centralized error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(err.status || 500).json({
     success: false,
-    message: err.message || "Internal Server Error!",
+    message: err.message || 'Internal Server Error!',
     path: req.originalUrl,
     method: req.method,
     timestamp: new Date().toISOString(),
-    stack: err.stack,
+    stack: err.stack
   });
 });
-const PORT = 3002;
+const PORT = process.env.PORT;
 await connectDB();
-await connectSupabase();
+// await connectSupabase();
 app.listen(PORT, () => {
   console.log(`Server Running on Port ${PORT}`);
 });
