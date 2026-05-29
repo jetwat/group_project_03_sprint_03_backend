@@ -1,60 +1,70 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const orderSchema = new mongoose.Schema(
   {
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+      ref: 'User',
+      required: true
     },
     total_amount: {
       type: Decimal128,
       required: true,
-      trim: true,
+      trim: true
     },
     status: {
       type: String,
       required: true,
-      trim: true,
+      trim: true
     },
     order_item: [
       {
         book_id: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
+          ref: 'Product',
+          required: true
         },
         book_name: {
-          type: string,
+          type: String,
           required: true,
           unique: true,
-          trim: true,
+          trim: true
         },
         author: {
-          type: string,
+          type: String,
           required: true,
           unique: true,
-          trim: true,
+          trim: true
         },
         quantity: {
-          type: integer,
+          type: Number,
           required: true,
-          trim: true,
+          trim: true
         },
         price: {
-          type: Decimal128,
+          type: mongoose.Schema.Types.Decimal128,
           required: true,
-          trim: true,
+          trim: true
         },
         img_link: {
-          type: string,
+          type: String,
           required: true,
-          trim: true,
+          trim: true
         },
-      },
-    ],
+        isDiscount: {
+          type: Boolean,
+          default: false
+        },
+        discountPercent: {
+          type: Number,
+          default: 0,
+          min: 0,
+          max: 100
+        }
+      }
+    ]
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export const User = mongoose.model("user", userSchema);
+export const Order = mongoose.model('order', orderSchema);

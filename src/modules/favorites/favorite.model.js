@@ -11,31 +11,36 @@ const favoriteSchema = new mongoose.Schema(
       {
         book_id: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: 'Product',
           required: true
         },
         book_name: {
-          type: string,
+          type: String,
           required: true,
-          unique: true,
           trim: true
         },
         author: {
-          type: string,
+          type: String,
           required: true,
-          unique: true,
           trim: true
         },
-
         price: {
-          type: Decimal128,
-          required: true,
-          trim: true
+          type: mongoose.Schema.Types.Decimal128,
+          required: true
         },
         img_link: {
-          type: string,
+          type: String,
           required: true,
           trim: true
+        },
+        isDiscount: {
+          type: Boolean,
+          default: false
+        },
+        discountPercent: {
+          type: Number,
+          default: 0,
+          min: 0,
+          max: 100
         }
       }
     ]
