@@ -1,5 +1,5 @@
 // import โมเดล Cart เพื่อใช้ติดต่อ collection ของ cart ใน database
-import { Cart } from '../carts/cart.model.js';
+import { Cart } from './cart.model.js';
 // import mongoose เพื่อใช้ฟังก์ชันช่วยตรวจสอบ ObjectId
 import mongoose from 'mongoose';
 
@@ -7,8 +7,11 @@ import mongoose from 'mongoose';
 export const getCart = async (req, res, next) => {
   // ใช้ try/catch เพื่อดัก error ตอนทำงานกับ database
   try {
+    // ดึง user_id(คนหนึ่ง) จาก params ใน URL
     const user_id = req.params.user_id;
 
+    // ค้นหา cart ทั้งหมดที่เป็นของ user_id นี้จาก database
+    //(บรรทัดนี้คือสั่ง Mongoose ไปค้นหา cart ใน database โดยหา document ที่มี field user_id ตรงกับ user_id ที่รับมาจาก URL)
     const cart = await Cart.find({ user_id: user_id }).exec();
 
     // ส่ง response กลับไปพร้อม status 200 และข้อมูล cart

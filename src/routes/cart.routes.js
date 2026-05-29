@@ -15,7 +15,7 @@ import {
   updateCart,
   // ฟังก์ชันสำหรับลบ cart ตาม id
   deleteCart
-} from '../modules/controllers/cart.controller.js';
+} from '../modules/carts/cart.controller.js';
 
 // import middleware สำหรับตรวจสอบ user ก่อนเข้าใช้งาน route ที่ต้อง login
 import { authUser } from '../../middlewares/auth.js';
