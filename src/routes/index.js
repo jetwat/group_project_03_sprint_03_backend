@@ -14,4 +14,5 @@ router.use('/favorites', favoriteRouter);
 router.use('/orders', orderRouter);
 router.use('/reviews', reviewRouter);
 router.use('/coupons', couponRouter);
-router.use('/cart',)
+router.use('/cart', cartRouter);
+router.use('/products',productRouter)

@@ -11,6 +11,17 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
+export const getUserOrders = async (req, res, next) => {
+  try {
+    const user_id = req.params.user_id;
+    const orders = await Order.find({user_id:user_id}).exec();
+    return res.status(200).json({ success: true, data: orders });
+  } catch (err) {
+    // return res.status(400).json({ success: false, error: error });
+    next(err);
+  }
+};
+
 export const createOrder = async (req, res, next) => {
   const { user_id, total_amount, status, order_item } = req.body || {};
 
