@@ -23,6 +23,23 @@ Content-Type: application/json
 
 ### ---
 
+### [Admin] Create Coupon - percentage with max limit
+POST {{baseUrl}}/coupons
+Content-Type: application/json
+# Cookie: token={{adminToken}}
+
+{
+  "code": "MEGA80",
+  "discountType": "percentage",
+  "discountValue": 80,
+  "maxDiscountAmount": 500,
+  "minOrderAmount": 100,
+  "expiresAt": "2026-12-31T00:00:00.000Z",
+  "usageLimit": 100
+}
+
+### ---
+
 ### [Admin] Create Coupon - fixed
 POST {{baseUrl}}/coupons
 Content-Type: application/json
@@ -57,7 +74,8 @@ Content-Type: application/json
 
 {
   "isActive": false,
-  "usageLimit": 50
+  "usageLimit": 50,
+  "max"
 }
 
 ### ---
@@ -92,6 +110,18 @@ Content-Type: application/json
 
 {
   "code": "READ50",
+  "orderAmount": 1000
+}
+
+### ---
+
+### [User] Validate Coupon - percentage with max limit
+POST {{baseUrl}}/coupons/validate
+Content-Type: application/json
+# Cookie: token={{userToken}}
+
+{
+  "code": "MEGA80",
   "orderAmount": 1000
 }
 

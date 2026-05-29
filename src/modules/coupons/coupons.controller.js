@@ -55,10 +55,14 @@ export const validateCoupon = async (req, res) => {
       });
     }
 
-    const discountAmount =
+    let discountAmount =
       coupon.discountType === 'percentage'
         ? (orderAmount * coupon.discountValue) / 100
         : coupon.discountValue;
+
+    if (coupon.discountType === 'percentage' && coupon.maxDiscountAmount) {
+      discountAmount = Math.min(discountAmount, coupon.maxDiscountAmount);
+    }
 
     return res.json({
       success: true,
