@@ -7,8 +7,10 @@ import mongoose from 'mongoose';
 export const getCart = async (req, res, next) => {
   // ใช้ try/catch เพื่อดัก error ตอนทำงานกับ database
   try {
-    // ค้นหาข้อมูล cart ทั้งหมดจาก database
-    const cart = await Cart.find();
+    const user_id = req.params.user_id;
+
+    const cart = await Cart.find({ user_id: user_id }).exec();
+
     // ส่ง response กลับไปพร้อม status 200 และข้อมูล cart
     return res.status(200).json({ success: true, data: cart });
   } catch (err) {
