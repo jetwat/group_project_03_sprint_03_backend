@@ -8,7 +8,7 @@ const cart_ItemSchema = new mongoose.Schema(
       required: true
     },
     total_amount: {
-      type: Decimal128,
+      type: mongoose.Schema.Types.Decimal128,
       required: true,
       trim: true
     },
@@ -20,32 +20,32 @@ const cart_ItemSchema = new mongoose.Schema(
           required: true
         },
         book_name: {
-          type: string,
+          type: String,
           required: true,
           unique: true,
           trim: true
         },
         author: {
-          type: string,
+          type: String,
           required: true,
           unique: true,
           trim: true
         },
         quantity: {
-          type: integer,
+          type: Number,
           required: true,
           trim: true
         },
         price: {
-          type: Decimal128,
+          type: mongoose.Schema.Types.Decimal128,
           required: true,
           trim: true
         },
         img_link: {
-          type: string,
+          type: String,
           required: true,
           trim: true
-        }
+        },
       }
     ]
   },

@@ -2,10 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import { router as apiRoutes } from './routes/index.js';
 import { connectDB } from './config/mongodb.js';
-// import { connectSupabase } from "./config/supabase.js";
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-// import { limiter } from './middleware/rateLimiter.js';
+import { limiter } from "./middlewares/rateLimiter.js";
 const app = express();
 const corsOptions = {
   origin: [
@@ -18,7 +17,7 @@ const corsOptions = {
 };
 app.use(helmet());
 app.use(cors(corsOptions));
-// app.use(limiter);
+app.use(limiter);
 app.use(express.json());
 app.use(cookieParser());
 app.get('/', (req, res) => {

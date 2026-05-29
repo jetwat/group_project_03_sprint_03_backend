@@ -8,7 +8,7 @@ const orderSchema = new mongoose.Schema(
       required: true
     },
     total_amount: {
-      type: Decimal128,
+      type: mongoose.Schema.Types.Decimal128,
       required: true,
       trim: true
     },
