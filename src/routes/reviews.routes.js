@@ -9,7 +9,7 @@ import {
 
 export const router = Router();
 
-router.get('/:book_id', authUser, getABookReview);
+router.get('/:book_id', getABookReview);
 router.post('/', authUser, createUserReview);
 router.put('/:id', authUser, UpdateUserReview);
 router.delete('/:id', authUser, DeleteUserReview);
