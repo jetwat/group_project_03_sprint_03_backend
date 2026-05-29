@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authUser } from '../../middlewares/auth.js';
+import { authUser } from '../middlewares/auth.js';
 import {
   getABookReview,
   createUserReview,

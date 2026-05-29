@@ -3,15 +3,12 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 import { User } from '../modules/users/user.model.js';
-// import { supabase } from '../../config/supabase.js';
 import {
-  getUsers,
+  getUser,
   createUser,
   updateUser,
   deleteUser,
-  // createUserHash,
-  // usersLogin,
-  askUsers
+  getUsers
 } from '../modules/users/users.v2.controller.js';
 import { authUser } from '../middlewares/auth.js';
 
@@ -20,7 +17,9 @@ export const router = Router();
 //##use controller
 
 //read all users
-router.get('/', getUsers);
+router.get('/', authUser, getUsers);
+
+router.get('/:id',authUser, getUser);
 
 //Create a user
 router.post('/', createUser);
@@ -133,5 +132,3 @@ router.post('/auth/logout', (req, res) => {
   });
 });
 
-// // RAG: ask about users (auth required)
-router.post('/ask', authUser, askUsers);

@@ -6,19 +6,23 @@ import {
   getOrders,
   createOrder,
   updateOrder,
-  deleteOrder
-} from '../controllers/order.controllers.js';
+  deleteOrder,
+  getUserOrders
+} from '../modules/orders/order.controllers.js';
 
-import { authUser } from '../../middlewares/auth.js';
+import { authUser } from '../middlewares/auth.js';
+import { authorizeAdmin } from '../middlewares/author.js';
 
 export const router = Router();
 
 //##use controller
 
-router.get('/', getOrders);
+router.get('/',authUser,authorizeAdmin, getOrders);
 
-router.post('/', createOrder);
+router.get('/:user_id', authUser,getUserOrders);
 
-router.patch('/:id', updateOrder);
+router.post('/',authUser, createOrder);
 
-router.delete('/:id', deleteOrder);
+router.patch('/:id',authUser,authorizeAdmin, updateOrder);
+
+router.delete('/:id',authUser,authorizeAdmin, deleteOrder);
