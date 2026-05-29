@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 
 import {
   getAllOrders,
@@ -8,7 +6,7 @@ import {
   createOrder,
   updateOrderStatus,
   deleteOrder
-} from '../orders/order.controllers.js';
+} from '../modules/orders/order.controllers.js';
 
 import { authUser } from '../../middlewares/auth.js';
 

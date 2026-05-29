@@ -12,6 +12,26 @@ export const getAllOrders = async (req, res, next) => {
   }
 };
 
+export const getOrderById = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        error: 'Order not found'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: order
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export const createOrder = async (req, res, next) => {
   const { total_amount, status, order_item } = req.body || {};
 
@@ -92,6 +112,7 @@ export const deleteOrder = async (req, res, next) => {
     next(err);
   }
 };
+
 //User
 export const getMyOrders = async (req, res, next) => {
   try {
