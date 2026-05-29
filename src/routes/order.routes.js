@@ -7,9 +7,9 @@ import {
   createOrder,
   updateOrder,
   deleteOrder
-} from '../controllers/order.controllers.js';
+} from '../modules/orders/order.controllers.js';
 
-import { authUser } from '../../middlewares/auth.js';
+import { authUser } from '../middlewares/auth.js';
 
 export const router = Router();
 

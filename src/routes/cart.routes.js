@@ -18,7 +18,7 @@ import {
 } from '../modules/carts/cart.controller.js';
 
 // import middleware สำหรับตรวจสอบ user ก่อนเข้าใช้งาน route ที่ต้อง login
-import { authUser } from '../../middlewares/auth.js';
+import { authUser } from '../middlewares/auth.js';
 
 // สร้าง router ของ cart เพื่อ export ไปใช้ในไฟล์ routes หลัก
 export const router = Router();
