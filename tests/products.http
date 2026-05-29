@@ -1,0 +1,147 @@
+@baseUrl = http://localhost:3000/api
+@productId = replace_with_product_id
+
+### ================================================
+### PRODUCT ROUTES
+### ================================================
+
+### Health check
+GET {{baseUrl}}/products
+
+### ---
+
+### Get all products
+GET {{baseUrl}}/products
+
+### ---
+
+### Create product - normal product
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "book_name": "atomic habits",
+  "title": "atomic habits",
+  "isbn": "9780735211292",
+  "price": 399,
+  "rating": 4.8,
+  "img_link": "https://example.com/atomic-habits.jpg",
+  "page": 320,
+  "language": "english",
+  "publisher": "avery",
+  "stock": 25,
+  "is_highlighted": true,
+  "category": "self-help",
+  "author": "james clear",
+  "isDiscount": false,
+  "discountPercent": 0
+}
+
+### ---
+
+### Create product - discount product
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "book_name": "deep work",
+  "title": "deep work",
+  "isbn": "9781455586691",
+  "price": 450,
+  "rating": 4.7,
+  "img_link": "https://example.com/deep-work.jpg",
+  "page": 304,
+  "language": "english",
+  "publisher": "grand central publishing",
+  "stock": 10,
+  "is_highlighted": false,
+  "category": "productivity",
+  "author": "cal newport",
+  "isDiscount": true,
+  "discountPercent": 15
+}
+
+### ---
+
+### Create product - missing required field (should fail)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "book_name": "broken product",
+  "title": "broken product",
+  "price": 200
+}
+
+### ---
+
+### Create product - invalid discount logic (should fail)
+POST {{baseUrl}}/products
+Content-Type: application/json
+
+{
+  "book_name": "bad discount",
+  "title": "bad discount",
+  "isbn": "9780000000001",
+  "price": 199,
+  "rating": 4.1,
+  "img_link": "https://example.com/bad-discount.jpg",
+  "page": 150,
+  "language": "english",
+  "publisher": "test publisher",
+  "stock": 5,
+  "is_highlighted": false,
+  "category": "test-category",
+  "author": "test-author",
+  "isDiscount": true,
+  "discountPercent": 0
+}
+
+### ---
+
+### Get product by id
+GET {{baseUrl}}/products/{{productId}}
+
+### ---
+
+### Update product - normal update
+PUT {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+
+{
+  "price": 499,
+  "stock": 18,
+  "is_highlighted": true
+}
+
+### ---
+
+### Update product - add discount
+PUT {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+
+{
+  "isDiscount": true,
+  "discountPercent": 20
+}
+
+### ---
+
+### Update product - invalid discount logic (should fail)
+PUT {{baseUrl}}/products/{{productId}}
+Content-Type: application/json
+
+{
+  "isDiscount": false,
+  "discountPercent": 25
+}
+
+### ---
+
+### Delete product
+DELETE {{baseUrl}}/products/{{productId}}
+
+### ---
+
+### Delete product - wrong id (should fail)
+DELETE {{baseUrl}}/products/000000000000000000000000

@@ -17,12 +17,12 @@ export const router = Router();
 
 //##use controller
 
-router.get('/',authUser,authorizeAdmin, getOrders);
+router.get('/', authUser, authorizeAdmin, getOrders);
 
-router.get('/:user_id', authUser,getUserOrders);
+router.get('/:user_id', authUser, getUserOrders);
 
-router.post('/',authUser, createOrder);
+router.post('/', authUser, createOrder);
 
-router.patch('/:id',authUser,authorizeAdmin, updateOrder);
+router.patch('/:id', authUser, authorizeAdmin, updateOrder);
 
-router.delete('/:id',authUser,authorizeAdmin, deleteOrder);
+router.delete('/:id', authUser, authorizeAdmin, deleteOrder);
