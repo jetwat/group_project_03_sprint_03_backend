@@ -1,0 +1,173 @@
+@baseUrl = http://localhost:5000/api
+# @adminToken = your_admin_token_here
+# @userToken = your_user_token_here
+
+### ================================================
+### COUPON ROUTES
+### ================================================
+
+
+### [Admin] Create Coupon - percentage
+POST {{baseUrl}}/coupons
+Content-Type: application/json
+# Cookie: token={{adminToken}}
+
+{
+  "code": "READ50",
+  "discountType": "percentage",
+  "discountValue": 50,
+  "minOrderAmount": 100,
+  "expiresAt": "2026-12-31T00:00:00.000Z",
+  "usageLimit": 100
+}
+
+### ---
+
+### [Admin] Create Coupon - percentage with max limit
+POST {{baseUrl}}/coupons
+Content-Type: application/json
+# Cookie: token={{adminToken}}
+
+{
+  "code": "MEGA80",
+  "discountType": "percentage",
+  "discountValue": 80,
+  "maxDiscountAmount": 500,
+  "minOrderAmount": 100,
+  "expiresAt": "2026-12-31T00:00:00.000Z",
+  "usageLimit": 100
+}
+
+### ---
+
+### [Admin] Create Coupon - fixed
+POST {{baseUrl}}/coupons
+Content-Type: application/json
+# Cookie: token={{adminToken}}
+
+{
+  "code": "SAVE100",
+  "discountType": "fixed",
+  "discountValue": 100,
+  "minOrderAmount": 500,
+  "expiresAt": "2026-12-31T00:00:00.000Z",
+  "usageLimit": null
+}
+
+### ---
+
+### [Admin] Create Coupon - missing required field (should fail)
+POST {{baseUrl}}/coupons
+Content-Type: application/json
+# Cookie: token={{adminToken}}
+
+{
+  "code": "BROKEN"
+}
+
+### ---
+
+### [Admin] Update Coupon
+PATCH {{baseUrl}}/coupons/6a1934eae94aed7d25799f41
+Content-Type: application/json
+# Cookie: token={{adminToken}}
+
+{
+  "isActive": false,
+  "usageLimit": 50,
+  "max"
+}
+
+### ---
+
+### [Admin] Update Coupon - wrong id (should fail)
+PATCH {{baseUrl}}/coupons/000000000000000000000000
+Content-Type: application/json
+# Cookie: token={{adminToken}}
+
+{
+  "isActive": false
+}
+
+### ---
+
+### [Admin] Delete Coupon
+DELETE {{baseUrl}}/coupons/6a1934eae94aed7d25799f41
+# Cookie: token={{adminToken}}
+
+### ---
+
+### [Admin] Delete Coupon - wrong id (should fail)
+DELETE {{baseUrl}}/coupons/000000000000000000000000
+# Cookie: token={{adminToken}}
+
+### ================================================
+
+### [User] Validate Coupon - percentage
+POST {{baseUrl}}/coupons/validate
+Content-Type: application/json
+# Cookie: token={{userToken}}
+
+{
+  "code": "READ50",
+  "orderAmount": 1000
+}
+
+### ---
+
+### [User] Validate Coupon - percentage with max limit
+POST {{baseUrl}}/coupons/validate
+Content-Type: application/json
+# Cookie: token={{userToken}}
+
+{
+  "code": "MEGA80",
+  "orderAmount": 1000
+}
+
+### ---
+
+### [User] Validate Coupon - fixed
+POST {{baseUrl}}/coupons/validate
+Content-Type: application/json
+# Cookie: token={{userToken}}
+
+{
+  "code": "SAVE100",
+  "orderAmount": 600
+}
+
+### ---
+
+### [User] Validate Coupon - code not found (should fail)
+POST {{baseUrl}}/coupons/validate
+Content-Type: application/json
+# Cookie: token={{userToken}}
+
+{
+  "code": "FAKECODE",
+  "orderAmount": 300
+}
+
+### ---
+
+### [User] Validate Coupon - below minOrderAmount (should fail)
+POST {{baseUrl}}/coupons/validate
+Content-Type: application/json
+# Cookie: token={{userToken}}
+
+{
+  "code": "SAVE100",
+  "orderAmount": 100
+}
+
+### ---
+
+### [User] Validate Coupon - no token (should fail 401)
+POST {{baseUrl}}/coupons/validate
+Content-Type: application/json
+
+{
+  "code": "READ50",
+  "orderAmount": 300
+}
