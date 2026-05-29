@@ -1,4 +1,4 @@
-import { User } from '../modules/users/user.model';
+import { User } from '../modules/users/user.model.js';
 
 export const authorizeAdmin = async (req, res, next) => {
   const role = await User.findById(req.user.users._id);
