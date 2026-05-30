@@ -1,7 +1,8 @@
 import { Order } from './order.model.js';
 import mongoose from 'mongoose';
 
-export const getOrders = async (req, res, next) => {
+//Admin
+export const getAllOrders = async (req, res, next) => {
   try {
     const orders = await Order.find();
     return res.status(200).json({ success: true, data: orders });
@@ -11,21 +12,35 @@ export const getOrders = async (req, res, next) => {
   }
 };
 
-export const getUserOrders = async (req, res, next) => {
+export const getOrderById = async (req, res, next) => {
   try {
-    const user_id = req.params.user_id;
-    const orders = await Order.find({user_id:user_id}).exec();
-    return res.status(200).json({ success: true, data: orders });
+    const order = await Order.findById(req.params.id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        error: 'Order not found'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: order
+    });
   } catch (err) {
-    // return res.status(400).json({ success: false, error: error });
     next(err);
   }
 };
 
 export const createOrder = async (req, res, next) => {
-  const { user_id, total_amount, status, order_item } = req.body || {};
+  const { total_amount, status, order_item } = req.body || {};
 
-  if (!user_id || !total_amount || !status || !order_item) {
+  if (
+    total_amount === undefined ||
+    !status ||
+    !Array.isArray(order_item) ||
+    order_item.length === 0
+  ) {
     const err = new Error(
       'user_id, total_amount, status, order_item are required'
     );
@@ -36,18 +51,21 @@ export const createOrder = async (req, res, next) => {
 
   try {
     const doc = await Order.create({
-      user_id,
+      user_id: req.user.users._id,
       total_amount,
       status,
       order_item
     });
-    return res.status(201).json({ success: true, data: userResponse(doc) });
+    return res.status(201).json({
+      success: true,
+      data: doc
+    });
   } catch (err) {
     next(err);
   }
 };
 
-export const updateOrder = async (req, res, next) => {
+export const updateOrderStatus = async (req, res, next) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
       return res.status(400).json({
@@ -56,10 +74,16 @@ export const updateOrder = async (req, res, next) => {
       });
     }
 
-    const doc = await Order.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const { status } = req.body;
+
+    const doc = await Order.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      {
+        new: true,
+        runValidators: true
+      }
+    );
 
     if (!doc) {
       return res.status(404).json({
@@ -84,6 +108,22 @@ export const deleteOrder = async (req, res, next) => {
       return res.status(404).json({ success: false, error: 'Order not found' });
     }
     return res.status(200).json({ success: true, data: doc });
+  } catch (err) {
+    next(err);
+  }
+};
+
+//User
+export const getMyOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({
+      user_id: req.user.users._id
+    });
+
+    return res.status(200).json({
+      success: true,
+      data: orders
+    });
   } catch (err) {
     next(err);
   }

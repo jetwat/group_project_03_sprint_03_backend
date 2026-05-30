@@ -9,13 +9,12 @@ const orderSchema = new mongoose.Schema(
     },
     total_amount: {
       type: mongoose.Schema.Types.Decimal128,
-      required: true,
-      trim: true
+      required: true
     },
     status: {
       type: String,
-      required: true,
-      trim: true
+      enum: ['pending', 'paid', 'shipped', 'completed', 'cancelled'],
+      default: 'pending'
     },
     order_item: [
       {
@@ -27,24 +26,21 @@ const orderSchema = new mongoose.Schema(
         book_name: {
           type: String,
           required: true,
-          unique: true,
           trim: true
         },
         author: {
           type: String,
           required: true,
-          unique: true,
           trim: true
         },
         quantity: {
           type: Number,
           required: true,
-          trim: true
+          min: 1
         },
         price: {
           type: mongoose.Schema.Types.Decimal128,
-          required: true,
-          trim: true
+          required: true
         },
         img_link: {
           type: String,

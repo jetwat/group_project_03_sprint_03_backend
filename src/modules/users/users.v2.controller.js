@@ -1,7 +1,5 @@
 import { User } from './user.model.js';
 
-
-
 const userResponse = (doc) => {
   const user = doc.toObject();
   delete user.password;
@@ -14,7 +12,7 @@ const PASSWORD_MAX = 72;
 export const getUser = async (req, res, next) => {
   try {
     const id = req.params.id;
-    const user = await User.findbyId(id);
+    const user = await User.findById(id);
     return res.status(200).json({ success: true, data: user });
   } catch (err) {
     next(err);
@@ -31,7 +29,7 @@ export const getUsers = async (req, res, next) => {
 };
 
 export const createUser = async (req, res, next) => {
-  const { username, email, password, role } = req.body || {};
+  const { username, email, password, role, fullName } = req.body || {};
 
   const trimmedUsername = String(username || '').trim();
   const trimmedEmail = String(email || '')
@@ -60,12 +58,12 @@ export const createUser = async (req, res, next) => {
     err.status = 400;
     return next(err);
   }
-
   try {
     const doc = await User.create({
       username: trimmedUsername,
       email: trimmedEmail,
       password,
+      fullName,
       ...(role ? { role } : {})
     });
     const safe = doc.toObject();
@@ -132,5 +130,3 @@ export const deleteUser = async (req, res, next) => {
     next(err);
   }
 };
-
-

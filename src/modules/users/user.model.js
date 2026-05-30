@@ -27,8 +27,7 @@ const userSchema = new mongoose.Schema(
       select: false
     },
 
-    firstName: { type: String, required: true, trim: true },
-    lastName: { type: String, required: true, trim: true },
+    fullName: { type: String, required: true, trim: true },
     dateOfBirth: { type: Date },
     phone: { type: String, trim: true },
 
@@ -59,19 +58,18 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+userSchema.pre('save', async function () {
+  if (!this.isModified('password')) return;
+
   this.password = await bcrypt.hash(this.password, 12);
-  next();
 });
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('card.cvv')) return next();
+userSchema.pre('save', async function () {
+  if (!this.isModified('card.cvv')) return;
 
   if (this.card && this.card.cvv) {
     this.card.cvv = await bcrypt.hash(this.card.cvv, 12);
   }
-  next();
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
