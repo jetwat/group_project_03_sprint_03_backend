@@ -7,6 +7,7 @@ import { router as reviewRouter } from './reviews.routes.js';
 import { router as couponRouter } from './coupons.routes.js';
 import { router as cartRouter } from './cart.routes.js';
 import { router as productRouter } from './product.routes.js';
+import { router as feedbackRoutes } from './feedback.routes.js';
 
 export const router = Router();
 
@@ -17,3 +18,4 @@ router.use('/reviews', reviewRouter);
 router.use('/coupons', couponRouter);
 router.use('/cart', cartRouter);
 router.use('/producsts', productRouter);
+router.use('/feedback', feedbackRoutes);
