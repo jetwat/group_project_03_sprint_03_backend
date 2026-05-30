@@ -112,3 +112,11 @@ Content-Type: application/json
     "cvv": "222"
   }
 }
+
+### Create Feedback
+POST http://localhost:3000/api/feedback
+Content-Type: application/json
+
+{
+  "message": "This website is bad"
+}
