@@ -26,8 +26,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "admin@test.com",
-  "password": "password123"
+  "email": "ploy1@test.com",
+  "password": "password456"
 }
 
 ### Create User (user)
@@ -66,3 +66,49 @@ GET http://localhost:3000/api/orders/6a19eababbd954501a285e22
 
 ### Delete Order (Admin)
 DELETE http://localhost:3000/api/orders/PUT_ORDER_ID_HERE
+
+//For setting page
+
+### Get My Profile
+GET http://localhost:3000/api/users/me
+
+### Update My Profile
+PATCH http://localhost:3000/api/users/me
+Content-Type: application/json
+
+{
+  "username": "UserployNarak",
+  "fullName": "PloyNarak",
+  "phone": "0877777777",
+  "dateOfBirth": "1999-09-12",
+  "email": "ploy1@test.com",
+  "password":"password456"
+}
+
+### Update Address
+PATCH http://localhost:3000/api/users/me
+Content-Type: application/json
+
+{
+  "address": {
+    "building": "45/8",
+    "road": "สุขุมวิท 38",
+    "district": "คลองเตย",
+    "province": "Bangkok",
+    "postcode": "10110",
+    "country": "Thailand"
+  }
+}
+
+### Update Card
+PATCH http://localhost:3000/api/users/me
+Content-Type: application/json
+
+{
+  "card": {
+    "cardholder": "PLOY YAH",
+    "cardNumber": "4111111222211111",
+    "expiry": "05/30",
+    "cvv": "222"
+  }
+}

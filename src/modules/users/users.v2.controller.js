@@ -2,7 +2,13 @@ import { User } from './user.model.js';
 
 const userResponse = (doc) => {
   const user = doc.toObject();
+
   delete user.password;
+
+  if (user.card) {
+    delete user.card.cvv;
+  }
+
   return user;
 };
 
@@ -66,10 +72,11 @@ export const createUser = async (req, res, next) => {
       fullName,
       ...(role ? { role } : {})
     });
-    const safe = doc.toObject();
-    delete safe.password;
 
-    return res.status(201).json({ success: true, data: safe });
+    return res.status(201).json({
+      success: true,
+      data: userResponse(doc)
+    });
   } catch (err) {
     if (err.code === 11000) {
       err.status = 409;
@@ -126,6 +133,81 @@ export const deleteUser = async (req, res, next) => {
     }
 
     return res.status(200).json({ success: true, data: doc });
+  } catch (err) {
+    next(err);
+  }
+};
+
+//For setting page
+export const getProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.users._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: userResponse(user)
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const updateProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.users._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        error: 'User not found'
+      });
+    }
+
+    if (req.body.username !== undefined) {
+      user.username = req.body.username;
+    }
+
+    if (req.body.email !== undefined) {
+      user.email = req.body.email;
+    }
+
+    if (req.body.password !== undefined) {
+      user.password = req.body.password;
+    }
+
+    if (req.body.fullName !== undefined) {
+      user.fullName = req.body.fullName;
+    }
+
+    if (req.body.phone !== undefined) {
+      user.phone = req.body.phone;
+    }
+
+    if (req.body.dateOfBirth !== undefined) {
+      user.dateOfBirth = req.body.dateOfBirth;
+    }
+
+    if (req.body.address !== undefined) {
+      user.address = req.body.address;
+    }
+
+    if (req.body.card !== undefined) {
+      user.card = req.body.card;
+    }
+
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      data: userResponse(user)
+    });
   } catch (err) {
     next(err);
   }

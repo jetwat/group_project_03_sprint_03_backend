@@ -8,8 +8,11 @@ import {
   createUser,
   updateUser,
   deleteUser,
-  getUsers
+  getUsers,
+  getProfile,
+  updateProfile
 } from '../modules/users/users.v2.controller.js';
+
 import { authUser } from '../middlewares/auth.js';
 
 export const router = Router();
@@ -19,7 +22,13 @@ export const router = Router();
 //read all users
 router.get('/', authUser, getUsers);
 
-router.get('/:id',authUser, getUser);
+////////////////// Profile Settings
+router.get('/me', authUser, getProfile);
+
+router.patch('/me', authUser, updateProfile);
+/////////////////////////////////////////////////
+
+router.get('/:id', authUser, getUser);
 
 //Create a user
 router.post('/', createUser);
@@ -131,4 +140,3 @@ router.post('/auth/logout', (req, res) => {
     message: 'Logged out successfully'
   });
 });
-
