@@ -51,7 +51,7 @@ export const createOrder = async (req, res, next) => {
 
   try {
     const doc = await Order.create({
-      user_id: req.user.id,
+      user_id: req.user.users._id,
       total_amount,
       status,
       order_item
@@ -117,7 +117,7 @@ export const deleteOrder = async (req, res, next) => {
 export const getMyOrders = async (req, res, next) => {
   try {
     const orders = await Order.find({
-      user_id: req.user.id
+      user_id: req.user.users._id
     });
 
     return res.status(200).json({
