@@ -17,5 +17,5 @@ router.use('/orders', orderRouter);
 router.use('/reviews', reviewRouter);
 router.use('/coupons', couponRouter);
 router.use('/cart', cartRouter);
-router.use('/producsts', productRouter);
+router.use('/products', productRouter);
 router.use('/feedback', feedbackRoutes);
