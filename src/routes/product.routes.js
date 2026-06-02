@@ -8,5 +8,5 @@ export const router = Router();
 router.get('/', getProducts);
 router.get('/:id', getProductById);
 router.post('/', authUser,authorizeAdmin, createProduct);
-router.put('/:id', authUser,authorizeAdmin, updateProduct);
+router.put('/:id', authUser, updateProduct);
 router.delete('/:id', authUser,authorizeAdmin, deleteProduct);
