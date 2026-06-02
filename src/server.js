@@ -4,7 +4,7 @@ import { router as apiRoutes } from './routes/index.js';
 import { connectDB } from './config/mongodb.js';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-import { limiter } from "./middlewares/rateLimiter.js";
+import { limiter } from './middlewares/rateLimiter.js';
 const app = express();
 const corsOptions = {
   origin: [
