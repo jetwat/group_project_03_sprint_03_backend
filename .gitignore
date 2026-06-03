@@ -3,3 +3,6 @@ node_modules/
 .DS_Store
 group_project_03_sprint_03-backend/
 test
+
+# private
+repomix/

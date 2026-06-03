@@ -1,5 +1,13 @@
 import { Order } from './order.model.js';
+import { Product } from '../products/product.model.js';
 import mongoose from 'mongoose';
+
+function createValidationError(message) {
+  const err = new Error(message);
+  err.name = 'ValidationError';
+  err.status = 400;
+  return err;
+}
 
 //Admin
 export const getAllOrders = async (req, res, next) => {
@@ -41,15 +49,46 @@ export const createOrder = async (req, res, next) => {
     !Array.isArray(order_item) ||
     order_item.length === 0
   ) {
-    const err = new Error(
-      'user_id, total_amount, status, order_item are required'
+    return next(
+      createValidationError('user_id, total_amount, status, order_item are required')
     );
-    err.name = 'ValidationError';
-    err.status = 400;
-    return next(err);
   }
 
+  const stockRequests = new Map();
+
+  for (const item of order_item) {
+    const quantity = Number(item.quantity);
+    const bookId = item.book_id;
+
+    if (!mongoose.Types.ObjectId.isValid(bookId) || quantity < 1) {
+      return next(createValidationError('Valid book_id and quantity are required'));
+    }
+
+    stockRequests.set(bookId, (stockRequests.get(bookId) || 0) + quantity);
+  }
+
+  const decrementedStock = [];
+
   try {
+    for (const [bookId, quantity] of stockRequests) {
+      const result = await Product.updateOne(
+        { _id: bookId, stock: { $gte: quantity } },
+        { $inc: { stock: -quantity } }
+      );
+
+      if (result.modifiedCount === 0) {
+        const product = await Product.findById(bookId).select('book_name stock');
+        const bookName = product?.book_name || bookId;
+        const availableStock = product?.stock ?? 0;
+
+        throw createValidationError(
+          `${bookName} has only ${availableStock} item(s) in stock`
+        );
+      }
+
+      decrementedStock.push({ bookId, quantity });
+    }
+
     const doc = await Order.create({
       user_id: req.user.users._id,
       total_amount,
@@ -61,6 +100,14 @@ export const createOrder = async (req, res, next) => {
       data: doc
     });
   } catch (err) {
+    if (decrementedStock.length > 0) {
+      await Promise.allSettled(
+        decrementedStock.map(({ bookId, quantity }) =>
+          Product.updateOne({ _id: bookId }, { $inc: { stock: quantity } })
+        )
+      );
+    }
+
     next(err);
   }
 };
