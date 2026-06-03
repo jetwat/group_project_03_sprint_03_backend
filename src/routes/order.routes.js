@@ -22,6 +22,6 @@ router.get('/me', authUser, getMyOrders);
 
 router.post('/', authUser, createOrder);
 
-router.patch('/:id', authUser, authorizeAdmin, updateOrderStatus);
+router.patch('/:id', authUser, updateOrderStatus);
 
 router.delete('/:id', authUser, authorizeAdmin, deleteOrder);
