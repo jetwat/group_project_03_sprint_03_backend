@@ -11,7 +11,7 @@ const corsOptions = {
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
-    'https://jsd-12-full-stack-frontend.vercel.app'
+    'https://group-project-03-sprint-02-chi.vercel.app'
   ], // frontend domain
   credentials: true // ✅ allow cookies to be sent
 };
