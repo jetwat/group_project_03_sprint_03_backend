@@ -6,11 +6,11 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "username": "TuiDui",
-  "email": "tuidui.drr@test.com",
+  "username": "nike",
+  "email": "nike@test.com",
   "password": "password123",
-  "fullName": "System Admin",
-  "role": "admin"
+  "fullName": "System User",
+  "role": "user"
 }
 
 ### Update Order Status
