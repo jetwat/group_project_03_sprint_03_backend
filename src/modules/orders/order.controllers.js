@@ -1,5 +1,6 @@
 import { Order } from './order.model.js';
 import { Product } from '../products/product.model.js';
+import { Cart } from '../carts/cart.model.js';
 import mongoose from 'mongoose';
 
 function createValidationError(message) {
@@ -95,6 +96,9 @@ export const createOrder = async (req, res, next) => {
       status,
       order_item
     });
+
+    await Cart.deleteMany({ user_id: req.user.users._id });
+
     return res.status(201).json({
       success: true,
       data: doc
