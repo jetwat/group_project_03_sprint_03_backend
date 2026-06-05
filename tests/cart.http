@@ -16,17 +16,17 @@ POST {{baseUrl}}/users/login
 Content-Type: application/json
 
 {
-  "email": "carttester2@test.com",
+  "email": "tuidui.drr@test.com",
   "password": "password123"
 }
 
 ### Create Cart ลำดับที่ 3
 POST {{baseUrl}}/cart
 Content-Type: application/json
-Cookie: accessToken=PUT_ACCESS_TOKEN_HERE
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTFmMWQ5MDZiMzQxNTVhZGM2YWM0NTEiLCJpYXQiOjE3ODA0MjYwNzgsImV4cCI6MTc4MDQyOTY3OH0.TupkINL6qHx31qAbPOl--y1wVSeVh17fDSnPbnYjYSE
 
 {
-  "user_id": "6a1e8437ddf47f9d36c7aef8",
+  "user_id": "6a1f1d906b34155adc6ac451",
   "total_amount": 599,
   "status": "pending",
   "cart_item": [
@@ -42,8 +42,8 @@ Cookie: accessToken=PUT_ACCESS_TOKEN_HERE
 }
 
 ### Get Cart By User ID ลำดับที่ 4
-GET {{baseUrl}}/cart/6a1e84d8ddf47f9d36c7aef9
-Cookie: accessToken=PUT_ACCESS_TOKEN_HERE
+GET {{baseUrl}}/cart/6a1f1d906b34155adc6ac451
+Cookie: accessToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2YTFmMWQ5MDZiMzQxNTVhZGM2YWM0NTEiLCJpYXQiOjE3ODA0MjYwNzgsImV4cCI6MTc4MDQyOTY3OH0.TupkINL6qHx31qAbPOl--y1wVSeVh17fDSnPbnYjYSE
 
 ### Update Cart ลำดับที่ 5
 PATCH {{baseUrl}}/cart/6a1e84d8ddf47f9d36c7aef9

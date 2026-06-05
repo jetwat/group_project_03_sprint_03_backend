@@ -22,13 +22,11 @@ const cart_ItemSchema = new mongoose.Schema(
         book_name: {
           type: String,
           required: true,
-          unique: true,
           trim: true
         },
         author: {
           type: String,
           required: true,
-          unique: true,
           trim: true
         },
         quantity: {
@@ -45,7 +43,7 @@ const cart_ItemSchema = new mongoose.Schema(
           type: String,
           required: true,
           trim: true
-        },
+        }
       }
     ]
   },
