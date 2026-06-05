@@ -70,6 +70,7 @@ export const createUser = async (req, res, next) => {
       email: trimmedEmail,
       password,
       fullName,
+
       ...(role ? { role } : {})
     });
 
@@ -92,13 +93,14 @@ export const createUser = async (req, res, next) => {
 };
 
 export const updateUser = async (req, res, next) => {
-  const { username, email, password, role } = req.body || {};
+  const { username, email, password, role, dateOfBirth } = req.body || {};
   const updates = {};
 
   if (username !== undefined) updates.username = username;
   if (email !== undefined) updates.email = email;
   if (password !== undefined) updates.password = password;
   if (role !== undefined) updates.role = role;
+  if (dateOfBirth !== undefined) updates.dateOfBirth = dateOfBirth;
 
   if (Object.keys(updates).length === 0) {
     return res.status(400).json({
