@@ -6,11 +6,11 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "username": "admin",
-  "email": "admin@test.com",
+  "username": "nike",
+  "email": "nike@test.com",
   "password": "password123",
-  "fullName": "System Admin",
-  "role": "admin"
+  "fullName": "System User",
+  "role": "user"
 }
 
 ### Update Order Status
@@ -118,5 +118,5 @@ POST http://localhost:3000/api/feedback
 Content-Type: application/json
 
 {
-  "message": "This website is bad"
+  "message": "I need more books."
 }

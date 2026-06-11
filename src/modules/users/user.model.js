@@ -52,7 +52,16 @@ const userSchema = new mongoose.Schema(
           'Invalid expiry format (MM/YY)'
         ]
       },
-      cvv: { type: String, select: false, minlength: 3, maxlength: 4 }
+      cvv: {
+        type: String,
+        select: false,
+        validate: {
+          validator: function (v) {
+            return !v || v.length === 3;
+          },
+          message: 'CVV must be exactly 3 digits'
+        }
+      }
     }
   },
   { timestamps: true }

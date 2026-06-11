@@ -4,14 +4,15 @@ import { router as apiRoutes } from './routes/index.js';
 import { connectDB } from './config/mongodb.js';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
-import { limiter } from "./middlewares/rateLimiter.js";
+import { limiter } from './middlewares/rateLimiter.js';
 const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:5173',
     'http://localhost:5174',
     'http://localhost:5175',
-    'https://group-project-03-sprint-02-chi.vercel.app'
+    'https://group-project-03-sprint-02-chi.vercel.app',
+    'https://group-project-03-sprint-02.vercel.app'
   ], // frontend domain
   credentials: true // ✅ allow cookies to be sent
 };
