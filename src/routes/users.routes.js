@@ -79,8 +79,8 @@ router.post('/login', async (req, res, next) => {
     //ใส่ 3 paremeter --> ชื่อที่ๆเราจะไปเก็บใน cookie, ตัวแปร token, config
     res.cookie('accessToken', token, {
       httpOnly: true,
-      secure: isProd, //only send over HTTPS in production
-      sameSite: isProd ? 'none' : 'lax',
+      secure: true, //only send over HTTPS in production
+      sameSite: 'none',
       path: '/',
       maxAge: 60 * 60 * 1000 // 1hr
     });
